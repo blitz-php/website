@@ -110,7 +110,7 @@
                 <?php if (isset($languages, $currentLanguage)): ?>
                     <li class="nav-item dropdown">
                         <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                            <?= $currentLanguage ?>
+                            <?= strtoupper($currentLanguage) ?>
                             <span class="visually-hidden">(<?= __('Changer de langue') ?>)</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">

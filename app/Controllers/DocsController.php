@@ -2,7 +2,6 @@
 namespace App\Controllers;
 
 use App\Repositories\Documentation;
-use BlitzPHP\Contracts\Database\ConnectionResolverInterface;
 use BlitzPHP\Controllers\ApplicationController;
 
 class DocsController extends ApplicationController
@@ -29,14 +28,16 @@ class DocsController extends ApplicationController
             define('CURRENT_VERSION', $version);
         }
 
+        $language = 'fr';
+
         $sectionPage = $page ?: 'installation';
         [
             'metadata' => $metadata,
             'content'  => $content
-        ] = $this->docs->get($version, $sectionPage);
+        ] = $this->docs->get($version, $language, $sectionPage);
 
         if (empty($content)) {
-            $otherVersions = $this->docs->versionsContainingPage($page);
+            $otherVersions = $this->docs->versionsContainingPage($language, $page);
 
             return $this->response->view('404', [
                 'title'   => __('Page non trouvée'),
@@ -46,14 +47,14 @@ class DocsController extends ApplicationController
                 'versions'        => Documentation::getDocVersions(),
                 'currentSection'  => $otherVersions->isEmpty() ? '' : $page,
                 'canonical'       => null,
-                'currentLanguage' => 'fr',
+                'currentLanguage' => $language,
                 'languages'       => Documentation::getLanguages(),
             ], 404);
         }
 
         $section = '';
 
-        if ($this->docs->sectionExists($version, $page)) {
+        if ($this->docs->sectionExists($version, $language, $page)) {
             $section = $page;
         } elseif (! is_null($page)) {
             return redirect()->to('/docs/' . $version);
@@ -61,7 +62,7 @@ class DocsController extends ApplicationController
 
         $canonical = null;
 
-        if ($this->docs->sectionExists(DEFAULT_VERSION, $sectionPage)) {
+        if ($this->docs->sectionExists(DEFAULT_VERSION, $language, $sectionPage)) {
             $canonical = 'docs/'.DEFAULT_VERSION.'/'.$sectionPage;
         }
         
@@ -73,7 +74,7 @@ class DocsController extends ApplicationController
             'versions'        => Documentation::getDocVersions(),
             'currentSection'  => $section,
             'canonical'       => $canonical,
-            'currentLanguage' => 'fr',
+            'currentLanguage' => $language,
             'languages'       => Documentation::getLanguages(),
         ]);
     }

@@ -113,3 +113,5 @@ nb-configuration.xml
 **/cache/**
 /storage/framework/session
 /public/img/docs
+/resources/docs
+dploy.yaml

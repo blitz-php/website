@@ -13,7 +13,7 @@
             <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
                 <div class="mb-3 mb-md-0 d-flex text-nowrap">
                     <a class="btn btn-sm btn-bd-light rounded-2"
-                        href="https://github.com/blitz-php/docs/blob/<?= $currentVersion ?? DEFAULT_VERSION ?>/<?= $currentSection ?? 'installation' ?>.md"
+                        href="https://github.com/blitz-php/docs/edit/<?= $currentVersion ?? DEFAULT_VERSION ?>/<?= $currentLanguage ?? 'fr' ?>/<?= $currentSection ?? 'installation' ?>.md"
                         title="Voir et modifier ce fichier sur GitHub" target="_blank" rel="noopener">
                         Voir sur GitHub
                     </a>

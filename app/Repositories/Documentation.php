@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Markdown\GithubFlavoredMarkdownConverter;
 use App\Markdown\Renderer;
 use BlitzPHP\Cache\Cache;
 use BlitzPHP\Container\Services;
@@ -47,13 +46,11 @@ class Documentation
     /**
      * Get the given documentation page.
      */
-    public function get(string $version, string $page): array
+    public function get(string $version, string $language, string $page): array
     {
-        return $this->cache->remember('docs.'.$version.'.'.$page, 5, function () use ($version, $page) {
-            $path = resource_path('docs/'.$version.'/'.$page.'.md');
-
-            if ($this->files->exists($path)) {
-                return $this->renderer->make($this->files->get($path), $version);
+        return $this->cache->remember('docs.'.$version.'.'.$language.'.'.$page, 5, function () use ($version, $language, $page) {
+            if ($this->files->exists($path = $this->docPath($version, $language, $page))) {
+                return $this->renderer->make($this->files->get($path), $language, $version);
             }
 
             return ['metadata' => [], 'content' => ''];
@@ -63,24 +60,30 @@ class Documentation
     /**
      * Vérifiez si la section donnée existe.
      */
-    public function sectionExists(string $version, ?string $page): bool
+    public function sectionExists(string $version, string $language, ?string $page): bool
     {
         if (empty($page)) {
             return false;
         }
         
-        return $this->files->exists(
-            resource_path('docs/'.$version.'/'.$page.'.md')
-        );
+        return $this->files->exists($this->docPath($version, $language, $page));
+    }
+
+    /**
+     * Chein absolu vers le fichier readme d'une page de documentation
+     */
+    public function docPath(string $version, string $language, string $page): string
+    {
+        return  resource_path('docs/' . $version . '/' . $language . '/' . $page . '.md');
     }
 
     /**
      * Déterminez dans quelles versions une page existe.
      */
-    public function versionsContainingPage(?string $page): Collection
+    public function versionsContainingPage(string $language, ?string $page): Collection
     {
         return collect(static::getDocVersions())
-            ->filter(fn ($version) => $this->sectionExists($version, $page));
+            ->filter(fn ($version) => $this->sectionExists($version, $language, $page));
     }
 
     /**

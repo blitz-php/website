@@ -7,7 +7,7 @@ use DOMDocument;
 class Renderer 
 {
 
-    public function make(string $markdown, string $version): array
+    public function make(string $markdown, string $language, string $version): array
     {
         ['metadata' => $metadata, 'content' => $content] = $this->parse($markdown);
         
@@ -15,7 +15,7 @@ class Renderer
 
         $content = $this->replaceLinks($version, $content);
         $content = $this->buildTable($content);
-        $content = $this->buildImage($version, $content);
+        $content = $this->buildImage($version, $language, $content);
                     
         return ['metadata' => $metadata, 'content'  => $content];    
     }
@@ -70,7 +70,7 @@ class Renderer
         return str_replace('<table>', '<table class="table w-100">', $content);
     }
 
-    private function buildImage(string $version, string $content): string
+    private function buildImage(string $version, string $language, string $content): string
     {
         if (empty($content)) {
             return $content;
@@ -86,6 +86,10 @@ class Renderer
                     $src = '/img/docs/' . $image;
                 } elseif (img_exist('docs/' . $version . '/' . $image)) {
                     $src = '/img/docs/' . $version . '/' . $image;
+                } elseif (img_exist('docs/' . $language . '/' . $image)) {
+                    $src = '/img/docs/' . $language . '/' . $image;
+                } elseif (img_exist('docs/' . $version . '/' . $language . '/' . $image)) {
+                    $src = '/img/docs/' . $version . '/' . $language . '/' . $image;
                 } else {
                     $src = $image;
                 }
