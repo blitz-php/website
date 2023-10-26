@@ -1,0 +1,33 @@
+{
+    "name": "blitz-php/app-skeleton",
+    "description": "Skeleton App for Blitz framework",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dimitri Sitchet Tomkeu",
+            "email": "dimitrisitchet@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "blitz-php/framework": "^0.9"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.15"
+    },
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "BlitzPHP\\Initializer\\ComposerScripts::postUpdate"
+        ]
+    }
+}
