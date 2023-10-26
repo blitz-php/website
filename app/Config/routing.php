@@ -23,7 +23,7 @@ return [
 	 *
 	 * @var string
 	 */
-	'default_controller' => 'HomeController',
+	'default_controller' => 'PageController',
 
     /**
      * Méthode par défaut à appeler sur le contrôleur lorsqu'aucune autre méthode n'a été définie dans la route.
@@ -46,6 +46,12 @@ return [
 
      *
      * Ce paramètre est passé à la classe Router et géré là-bas.
+     *
+     * Si vous souhaitez utiliser une fermeture, vous devez la définir dans le constructeur de classe ou le fichier itinéraires en appelant :
+     *
+     * $routes->set404Override(function() {
+     *    // Do something here
+     * });
      *
      * Example:
 	 * 	'fallback' => 'App\Errors::show404',

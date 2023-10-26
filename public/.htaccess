@@ -1,4 +1,50 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (.*) index.php/$1 [L,NC,QSA]
+# Désactiver la navigation dans les répertoires
+Options -Indexes
+
+# ------------------------------------------------- ---------------------
+# Moteur de réécriture
+# ------------------------------------------------- ---------------------
+
+# L'activation du moteur de réécriture est nécessaire pour les règles et fonctionnalités suivantes.
+# FollowSymLinks doit être activé pour que cela fonctionne.
+<IfModule mod_rewrite.c>
+	Options +FollowSymlinks
+	RewriteEngine On
+
+	# Si vous avez installé BlitzPHP dans un sous-dossier, 
+    # vous devrez modifiez la ligne suivante pour qu'elle corresponde au sous-dossier dont vous avez besoin.
+    # http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+	# RewriteBase /
+
+	# Rediriger les barres obliques finales...
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} (.+)/$
+	RewriteRule ^ %1 [L,R=301]
+
+	# Réécrivez "www.example.com -> example.com"
+	RewriteCond %{HTTPS} !=on
+	RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+	RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+
+	# Vérifie si l'utilisateur tente d'accéder à un fichier valide,
+    # comme une image ou un document CSS, si ce n'est pas vrai, il envoie le
+    # requête au contrôleur frontal, index.php
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^([\s\S]*)$ index.php/$1 [L,NC,QSA]
+    # RewriteRule (.*) index.php/$1 [L,NC,QSA]
+
+    # Assurez-vous que l'en-tête d'autorisation est transmis
+    RewriteCond %{HTTP:Authorization} .
+	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+	# Si mod_rewrite n'est pas installé, tous les 404
+    # peut être envoyé à index.php et tout fonctionne normalement.
+	ErrorDocument 404 index.php
+</IfModule>
+
+# Désactiver le démarrage de la signature du serveur
+    ServerSignature Off
+# Désactiver la fin de la signature du serveur

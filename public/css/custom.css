@@ -1,0 +1,331 @@
+a {
+    color: var(--bd-link-color);
+    text-decoration: none;
+}
+
+#guide-content a:hover {
+    text-decoration: underline;
+}
+
+[data-bs-theme="light"] .text-light {
+    color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important
+}
+
+[data-bs-theme="dark"] .text-dark {
+    color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important
+}
+
+
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    font-family: scandia-web, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+    font-feature-settings: normal;
+    font-variation-settings: normal
+}
+
+body {
+    margin: 0;
+    line-height: inherit
+}
+
+hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px
+}
+
+code, kbd, samp, pre {
+    font-family: source-code-pro, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-size: 1em
+}
+
+.docs_main h1, .docs_main h2, .docs_main h3, .docs_main h4, .docs_main h5, .docs_main h6 {
+    font-weight: 500;
+    margin-bottom: .75em
+}
+
+.docs_main h2:not(:first-of-type), .docs_main h3 {
+    margin-top: 2em
+}
+
+.docs_main h4 {
+    margin-top: 1.5em
+}
+
+.docs_main h2 {
+    font-size: 1.75em;
+    font-weight: 400;
+    letter-spacing: -.5px;
+    line-height: 1.125em
+}
+
+@media (min-width: 768px) {
+    .docs_main h2 {
+        font-size: 2.25em
+    }
+}
+
+@media (min-width: 1024px) {
+    .docs_main h2 {
+        font-size: 3em
+    }
+}
+
+.docs_main h3 {
+    font-size: 1.25em;
+    font-weight: 500;
+    line-height: 1.25em;
+    letter-spacing: -.33px
+}
+
+@media (min-width: 640px) {
+    .docs_main h3 {
+        font-size: 1.75em
+    }
+}
+
+@media (min-width: 768px) {
+    .docs_main h3 {
+        font-size: 2em
+    }
+}
+
+.docs_main h4 {
+    font-size: 1em;
+    font-weight: 400;
+    letter-spacing: -.25px
+}
+
+@media (min-width: 640px) {
+    .docs_main h4 {
+        font-size: 1.5em
+    }
+}
+
+.docs_main h5 {
+    font-size: .95em;
+    font-weight: 700;
+    line-height: 1.666em;
+    color: #565454
+}
+
+@media (min-width: 640px) {
+    .docs_main h5 {
+        font-size: 1.125em
+    }
+}
+
+.docs_main h6 {
+    font-size: .875em;
+    font-weight: 500;
+    color: #777
+}
+
+.docs_main a {
+    position: relative;
+    text-decoration: none;
+    transition: all .3s ease
+}
+
+.docs_main p {
+    font-size: 1em;
+    line-height: 1.666em;
+    color: rgb(117, 115, 115)
+}
+
+.docs_main p strong {
+    font-weight: 500
+}
+
+.docs_main p.small {
+    font-size: .75em;
+    line-height: 1.714em
+}
+
+@media (min-width: 768px) {
+    .docs_main p {
+        font-size: 1.125em
+    }
+
+    .docs_main p.small {
+        font-size: .875em
+    }
+}
+
+.docs_main p+pre {
+    margin-top: 0
+}
+
+.docs_main p,
+.docs_main ul,
+.docs_main ol,
+.docs_main pre {
+    margin-bottom: 1.5em
+}
+
+.docs_main p a:hover,
+.docs_main ul a:hover,
+.docs_main ol a:hover,
+.docs_main pre a:hover {
+    opacity: .5;
+    /* color: darken(var(--bd-link-color), 100%) */
+}
+
+.docs_main q,
+.docs_main blockquote p {
+    quotes: "“""”""‘""’"
+}
+
+@media (min-width: 640px) {
+    .docs_main blockquote {
+        margin-left: 0;
+        margin-right: 0
+    }
+}
+
+.docs_main span.small_text {
+    display: block;
+    font-size: .625em;
+    line-height: 1.4em;
+    color: #565454
+}
+
+.docs_main span.label,
+.docs_main label {
+    display: block;
+    font-size: .625em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    opacity: .4;
+    margin-bottom: .875em;
+    letter-spacing: 2.5px
+}
+
+.docs_main code {
+    font-size: .875em;
+    font-family: source-code-pro, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    line-height: 1.714em;
+}
+
+.bd-callout p {
+    margin-bottom: 0
+}
+
+.docs_main a[name] {
+    position: relative;
+    display: block;
+    visibility: hidden;
+    top: -45px
+}
+
+.docs_main table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px;
+    margin-bottom: 2em
+}
+
+.docs_main table th,
+.docs_main table td {
+    border: 1px solid #d7d7dc;
+    padding: 10px;
+    text-align: left
+}
+
+.docs_main table th {
+    font-size: 16px
+}
+
+@media (min-width: 640px) {
+    .docs_main a[name] {
+        position: relative;
+        display: block;
+        visibility: hidden;
+        top: -30px
+    }
+}
+
+.docs_main h1 {
+    font-size: 2.5em;
+    letter-spacing: 0em
+}
+
+.docs_main h2 {
+    font-size: 1.75em;
+    letter-spacing: 0
+}
+
+.docs_main h3 {
+    font-size: 1.25em;
+    letter-spacing: 0;
+    font-weight: 500
+}
+
+.docs_main h4 {
+    font-size: 1em;
+    font-weight: 500;
+    letter-spacing: 0
+}
+
+.docs_main h4 a:before,
+.docs_main h3 a:before,
+.docs_main h2 a:before {
+    content: "#";
+    font-weight: 400;
+    position: absolute;
+    color: var(--bd-link-color);
+    opacity: .6
+}
+
+.docs_main h3 a:before,
+.docs_main h2 a:before {
+    margin-left: -25px;
+    font-size: 28px
+}
+
+.docs_main h4 a:before {
+    margin-left: -18px;
+    font-size: 17px
+}
+
+.docs_main p {
+    font-size: 1rem;
+    line-height: 1.8em
+}
+
+
+.docs_main h1+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+.docs_main h1+ul li {
+    display: block;
+    margin-bottom: .5em
+}
+
+
+.docs_main h1+ul li a:before {
+    content: "# ";
+    color: var(--bd-link-color)
+}
+
+.docs_main h1+ul ul {
+    margin-top: .5em;
+    padding: 0;
+    margin-bottom: 0
+}
+
+.docs_main h1+ul ul li {
+    padding-left: 1.5em
+}
+
+.docs_main h1+ul ul li a {
+    font-weight: 400
+}
+
