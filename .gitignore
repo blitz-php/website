@@ -112,3 +112,4 @@ nb-configuration.xml
 **/debugbar/**
 **/cache/**
 /storage/framework/session
+/public/img/docs
