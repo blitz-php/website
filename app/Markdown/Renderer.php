@@ -76,7 +76,7 @@ class Renderer
             return $content;
         }
 
-        preg_match_all('/<img src="([a-zA-Z0-9\-\._]+)" [^>]+>/i', $content, $images);
+        preg_match_all('/<img ?.* src="([a-zA-Z0-9\-\._]+)" [^>]+>/i', $content, $images);
 
         if (isset($images[1])) {
             helper('assets');
@@ -98,7 +98,13 @@ class Renderer
             }
         }
 
+        preg_match_all('/<img ?.* class="([a-zA-Z0-9\-_ ]+)" [^>]+>/i', $content, $classes);
+        if (isset($classes[1], $classes[1][0])) {
+            $content = str_replace($classes[1][0], $classes[1][0] . ' img-fluid', $content);
+        } else {
+            $content = str_replace('<img', '<img class="img-fluid"', $content);
+        }
 
-        return str_replace('<img', '<img class="img-fluid"', $content);
+        return $content;
     }
 }

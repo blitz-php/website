@@ -20,10 +20,10 @@ class Documentation
     /**
      * Get the documentation index page.
      */
-    public function getIndex(string $version): array
+    public function getIndex(string $version, string $language): array
     {
-        return $this->cache->remember('docs.'.$version.'.index', 5, function () use ($version) {
-            $path = resource_path('docs/'.$version.'/index.json');
+        return $this->cache->remember('docs.'.$version.'.'.$language.'.index', 5, function () use ($version, $language) {
+            $path = resource_path('docs/'.$version.'/'.$language.'/index.json');
 
             if ($this->files->exists($path)) {
                 $indexes = json_decode(file_get_contents($path), true);

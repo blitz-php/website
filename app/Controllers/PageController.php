@@ -12,7 +12,7 @@ class PageController extends ApplicationController
             'versions'        => Documentation::getDocVersions(),
             'currentSection'  => null,
             'canonical'       => null,
-            'currentLanguage' => 'fr',
+            'currentLanguage' => $this->request->session()->get('locale', 'fr'),
             'languages'       => Documentation::getLanguages(), 
         ]);
     }
@@ -37,4 +37,11 @@ class PageController extends ApplicationController
         return redirect()->home();
     }
 
+    public function setLocale($locale)
+    {
+        $this->request->session()->set('locale', $locale);
+        config(['app.language' => $locale]);
+
+        return back()->withCookie(cookie('locale', $locale));
+    }
 }

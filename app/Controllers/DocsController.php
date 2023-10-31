@@ -2,10 +2,13 @@
 namespace App\Controllers;
 
 use App\Repositories\Documentation;
+use BlitzPHP\Container\Services;
 use BlitzPHP\Controllers\ApplicationController;
+use BlitzPHP\Session\Store;
 
 class DocsController extends ApplicationController
 {  
+    protected Store $session;
     /**
      * Create a new controller instance.
      *
@@ -13,6 +16,7 @@ class DocsController extends ApplicationController
      */
     public function __construct(protected Documentation $docs)
     {
+        $this->session = Services::session();
     }
 
     /**
@@ -28,7 +32,7 @@ class DocsController extends ApplicationController
             define('CURRENT_VERSION', $version);
         }
 
-        $language = 'fr';
+        $language = $this->session->get('locale', 'fr');
 
         $sectionPage = $page ?: 'installation';
         [
@@ -68,7 +72,7 @@ class DocsController extends ApplicationController
         
         return view('docs', [
             'metadata'        => $metadata,
-            'indexes'         => $this->docs->getIndex($version),
+            'indexes'         => $this->docs->getIndex($version, $language),
             'content'         => $content,
             'currentVersion'  => $version,
             'versions'        => Documentation::getDocVersions(),

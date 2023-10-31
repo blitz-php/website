@@ -1,5 +1,4 @@
 <?php
-
 use BlitzPHP\Http\Middleware;
 
 /**
@@ -15,7 +14,8 @@ return [
      * @var array<string, string>
      */
     'aliases' => [
-
+        'body-parser' => \BlitzPHP\Middlewares\BodyParser::class,
+        'cors'        => \BlitzPHP\Middlewares\Cors::class,
     ],
 
     /**
@@ -23,8 +23,16 @@ return [
      * 
      * @var array<string|Closure|class-string>
      */
-    'globals' => [
- 
+    'globals' => [], 
+
+    /**
+     * Liste des alias de middlewares toujours appliqués à chaque requête.
+     * 
+     * @var array<string|Closure|class-string>
+     */
+    'groups' => [
+        'web' => [],
+        'api' => [],
     ],
 
     /**
