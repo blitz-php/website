@@ -134,8 +134,16 @@ code, kbd, samp, pre {
 .docs_main p {
     font-size: 1em;
     line-height: 1.666em;
-    color: rgb(117, 115, 115)
 }
+
+[data-bs-theme="light"] .docs_main p {
+    color: rgb(56, 55, 55)
+}
+
+[data-bs-theme="dark"] .docs_main p {
+    color: rgb(194, 191, 191)
+}
+
 
 .docs_main p strong {
     font-weight: 500
