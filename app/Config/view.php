@@ -220,7 +220,7 @@ return [
             //  * 
             //  * @var int
             //  */
-			// 'cache_lifetime' => 300,
+			// 'cache_lifetime' => 5 * MINUTE,
 
             // /**
             //  * Mettre à jour les modèles de cache à chaque appel ?

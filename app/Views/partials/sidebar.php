@@ -23,7 +23,7 @@
                         <ul class="list-unstyled fw-normal pb-2 small">
                             <?php foreach ($chapters as $title => $url): ?>
                             <li>
-                                <a href="<?= $url ?>" class="bd-links-link d-inline-block rounded <?= link_active(trim($url, '/')) ?>"
+                                <a href="<?= $url ?>" class="bd-links-link d-inline-block rounded <?= link_active(trim($url, '/'), 'active', true) ?>"
                                     aria-current="page"><?= $title ?></a>
                             </li>
                             <?php endforeach; ?>
