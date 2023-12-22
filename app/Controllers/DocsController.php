@@ -2,9 +2,9 @@
 namespace App\Controllers;
 
 use App\Repositories\Documentation;
-use BlitzPHP\Container\Services;
 use BlitzPHP\Controllers\ApplicationController;
 use BlitzPHP\Session\Store;
+use BlitzPHP\Utilities\String\Text;
 
 class DocsController extends ApplicationController
 {  
@@ -16,7 +16,33 @@ class DocsController extends ApplicationController
      */
     public function __construct(protected Documentation $docs)
     {
-        $this->session = Services::session();
+        $this->session = session();
+    }
+
+    /**
+     * Show the documentation index JSON representation.
+     */
+    public function index($version)
+    {
+        $major    = Text::before($version, '.');
+        $language = $this->session->get('locale', 'fr');
+        
+        /*
+        if (Text::before(array_values(Documentation::getDocVersions())[1], '.') + 1 === (int) $major) {
+            $version = $major = 'master';
+        }
+        dd($major, $version);
+
+        if (! $this->isVersion($version)) {
+            return redirect('docs/'.DEFAULT_VERSION.'/index.json', 301);
+        }
+
+        if ($major !== 'master' && $major < 9) {
+            return [];
+        }
+        */
+
+        return $this->docs->indexArray($version, $language);
     }
 
     /**

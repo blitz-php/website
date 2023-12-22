@@ -7,6 +7,7 @@ use BlitzPHP\Cache\Cache;
 use BlitzPHP\Container\Services;
 use BlitzPHP\Filesystem\Filesystem;
 use BlitzPHP\Utilities\Iterable\Collection;
+use BlitzPHP\Utilities\String\Text;
 
 class Documentation
 {
@@ -40,6 +41,47 @@ class Documentation
             }
 
             return [];
+        });
+    } 
+
+    /**
+     * Get the array based index representation of the documentation.
+     */
+    public function indexArray(string $version, string $language): array
+    {
+        return $this->cache->remember('docs-'.$version.'-'.$language.'-index', HOUR, function () use ($version, $language) {
+            $path = resource_path('docs/'.$version.'/'.$language.'/index.json');
+
+            if (! $this->files->exists($path)) {
+                return [];
+            }
+
+            $indexes = [];
+            foreach ($this->getIndex($version, $language) as $index) {
+                $indexes = array_merge($indexes, $index);
+            }
+            
+            return [
+                'pages' => collect($indexes)
+                    ->filter(fn ($index) => Text::contains($index, '/docs/' . $version . '/'))
+                    ->map(fn ($index) => resource_path(Text::of($index)->replace('docs/'.$version.'/', 'docs/'.$version.'/'.$language.'/')->append('.md')))
+                    ->filter(fn ($path) => $this->files->exists($path))
+                    ->mapWithKeys(function ($path) {
+                        $contents = $this->files->get($path);
+
+                        preg_match('/\# (?<title>[^\\n]+)/', $contents, $page);
+                        preg_match_all('/<a name="(?<fragments>[^"]+)"><\\/a>\n#+ (?<titles>[^\\n]+)/', $contents, $section);
+
+                        return [
+                            (string) Text::of($path)->afterLast(DS)->before('.md') => [
+                                'title' => $page['title'],
+                                'sections' => collect($section['fragments'])
+                                    ->combine($section['titles'])
+                                    ->map(fn ($title) => ['title' => $title])
+                            ],
+                        ];
+                    }),
+            ];
         });
     }
 

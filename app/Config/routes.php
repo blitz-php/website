@@ -27,7 +27,7 @@ Route::addPlaceholder([
 Route::name('home')->get('/', [PageController::class, 'home']);
 Route::name('goto')->get('/goto/(:any)', [PageController::class, 'goto']);
 Route::get('docs', fn() => redirect()->to('docs/' . DEFAULT_VERSION));
-// Route::get('docs/(:version)/index.json', [DocsController::class, 'index']);
+Route::get('docs/(:version)/index.json', [DocsController::class, 'index']);
 Route::get('docs/(:version)', fn($version) => redirect()->to('docs/' . $version . '/installation'));
 Route::name('docs.version')->get('docs/(:version)/(:page)', [DocsController::class, 'show']);
 Route::name('lang')->get('lang/(:alpha)', [PageController::class, 'setLocale']);
