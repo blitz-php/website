@@ -2,8 +2,6 @@
 
 namespace App\Markdown;
 
-use DOMDocument;
-
 class Renderer 
 {
 
@@ -40,7 +38,7 @@ class Renderer
      *
      * @param string $markdown Le contenu markdown
      */
-    private function parse(string $markdown): array
+    public function parse(string $markdown): array
     {
         $charactersBetweenGroupedHyphens = '/^---([\s\S]*?)---/';
         preg_match($charactersBetweenGroupedHyphens, $markdown, $metadataMatched);

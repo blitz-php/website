@@ -50,38 +50,54 @@ class Documentation
     public function indexArray(string $version, string $language): array
     {
         return $this->cache->remember('docs-'.$version.'-'.$language.'-index', HOUR, function () use ($version, $language) {
-            $path = resource_path('docs/'.$version.'/'.$language.'/index.json');
-
-            if (! $this->files->exists($path)) {
-                return [];
+            $indexes = []; 
+            foreach ($this->getIndex($version, $language) as $section => $index) {
+                foreach ($index as $title => $url) {
+                    $indexes[] = [
+                        'section' => $section,
+                        'title'   => $title,
+                        'url'     => $url
+                    ];
+                }
             }
 
-            $indexes = [];
-            foreach ($this->getIndex($version, $language) as $index) {
-                $indexes = array_merge($indexes, $index);
-            }
-            
-            return [
-                'pages' => collect($indexes)
-                    ->filter(fn ($index) => Text::contains($index, '/docs/' . $version . '/'))
-                    ->map(fn ($index) => resource_path(Text::of($index)->replace('docs/'.$version.'/', 'docs/'.$version.'/'.$language.'/')->append('.md')))
-                    ->filter(fn ($path) => $this->files->exists($path))
-                    ->mapWithKeys(function ($path) {
-                        $contents = $this->files->get($path);
+           $indexes = collect($indexes)
+                ->filter(fn ($index) => Text::contains($index['url'], '/docs/' . $version . '/'))
+                ->map(fn ($index) => [
+                    ...$index,
+                    'path' => resource_path(Text::of($index['url'])->replace('docs/'.$version.'/', 'docs/'.$version.'/'.$language.'/')->append('.md')),
+                    'url' => site_url($index['url']),
+                ])
+                ->filter(fn ($index) => $this->files->exists($index['path']))
+                ->map(function ($index) {
+                    $contents = $this->files->get($index['path']);
 
-                        preg_match('/\# (?<title>[^\\n]+)/', $contents, $page);
-                        preg_match_all('/<a name="(?<fragments>[^"]+)"><\\/a>\n#+ (?<titles>[^\\n]+)/', $contents, $section);
+                    ['metadata' => $meta, 'content' => $contents] = $this->renderer->parse($contents);
 
-                        return [
-                            (string) Text::of($path)->afterLast(DS)->before('.md') => [
-                                'title' => $page['title'],
-                                'sections' => collect($section['fragments'])
-                                    ->combine($section['titles'])
-                                    ->map(fn ($title) => ['title' => $title])
-                            ],
+                    preg_match_all('/<a name="(?<fragments>[^"]+)"><\\/a>\r?\n#+ (?<titles>[^\\n]+)/', $contents, $section);
+                    // $contents = preg_replace('/<a name="(?<fragments>[^"]+)"><\\/a>\r?\n#+ (?<titles>[^\\n]+)/', '', $contents);
+
+                    $sections = [];
+                    for ($i = 0, $s = count($section['fragments']); $i < $s; $i++) {
+                        $sections[] = [
+                            'title' => trim($section['titles'][$i]),
+                            'fragment' => $section['fragments'][$i],
                         ];
-                    }),
-            ];
+                    }
+
+                    return [
+                        'slug'        => (string) Text::of($index['path'])->afterLast(DS)->before('.md'),
+                        'title'       => $meta['title'] ?? $index['title'],
+                        'description' => $meta['description'] ?? '',
+                        'keywords'    => $meta['keywords'] ?? '',
+                        'url'         => $index['url'],
+                        'section'     => $index['section'],
+                        'sections'    => $sections
+                    ];
+                })
+                ->toArray();
+
+            return array_values($indexes);
         });
     }
 

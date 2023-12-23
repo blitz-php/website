@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="<?= $this->show('description', false) ?>" />
     <meta name="author" content="Dimitri Sitchet Tomkeu" />
-    <meta name="docsearch:language" content="<?= config('app.language') ?>" />
-    <meta name="docsearch:version" content="<?= $currentVersion ?? DEFAULT_VERSION ?>" />
-
+    
     <title><?= $this->show('title', false) ?> · BlitzPHP</title>
     <link rel="icon" href="<?= img_url('logo/logo-mini-transparent.png') ?>" />
 
@@ -37,11 +35,12 @@
 
     <script src="<?= lib_js_url('bootstrap/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= lib_js_url('prismjs/prism') ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
-    <script src="<?= js_url('sdk.umd.js') ?>"></script>
+    <script src="<?= lib_js_url('search/fuze.min') ?>"></script>
+    <script src="<?= lib_js_url('search/minisearch.min') ?>"></script>
     
     <?= $this->show('script') ?>
     <script src="<?= js_url('docs.min') ?>"></script>
+    <script src="<?= js_url('search') ?>"></script>
 
     <div class="position-fixed" aria-hidden="true"><input type="text" tabindex="-1" /></div>
 </body>
