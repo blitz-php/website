@@ -39,11 +39,18 @@ const miniSearch = new MiniSearch({
 window.addEventListener('load', async function() {
     const version = searchInitBtn.getAttribute('data-bd-docs-version');
 
-    indexes = await this.fetch(`/docs/${version}/index.json`).then(response => response.json())
+    const indexes = await this.fetch(`/docs/${version}/index.json`).then(response => response.json())
 
     fuse = new Fuse(indexes, fuseOptions);
     miniSearch.addAll(indexes)
 })
+
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.code === 'KeyK') {
+        event.preventDefault()
+        searchInitBtn.click()
+    }
+});  
 
 searchInitBtn.addEventListener('click', function(e) {
     e.preventDefault();
