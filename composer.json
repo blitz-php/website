@@ -17,7 +17,7 @@
     },
     "require": {
         "blitz-php/cache": "1.2.2",
-        "blitz-php/framework": "^0.9",
+        "blitz-php/framework": "^0.10",
         "league/commonmark": "^2.4"
     },
     "require-dev": {

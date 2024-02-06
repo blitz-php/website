@@ -1,5 +1,5 @@
 <?php
-use BlitzPHP\Http\Middleware;
+use BlitzPHP\Http\MiddlewareQueue;
 
 /**
  * ------------------------------------------------- -------------------------
@@ -40,8 +40,8 @@ return [
      * 
      * @var Closure
      */
-    'build' => function (Middleware $middleware) {
+    'build' => function (MiddlewareQueue $queue) {
         
-        // $middleware->insertBefore('app', 'body-parser');
+        // $queue->insertBefore('app', 'body-parser');
     },
 ];
