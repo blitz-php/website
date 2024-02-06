@@ -78,14 +78,16 @@ function replaceBlockquote(el, regex, getImageAndColorByType) {
         wrapper.appendChild(imageWrapper);
         */
 
-        el.parentNode.insertBefore(wrapper, el);
+        // el.parentNode.insertBefore(wrapper, el);
+        el.parentNode.classList = 'bd-callout my-3 mx-auto px-4 py-4 shadow'
 
         // el.innerHTML = str.replace(regex, '');
 
         // el.classList = 'mb-0 ms-lg-4';
         el.classList = 'mb-0';
         wrapper.classList.add(`bd-callout-${color}`);
-        wrapper.appendChild(el);
+        el.parentNode.classList.add(`bd-callout-${color}`);
+        // wrapper.appendChild(el);
     }
 }
 
