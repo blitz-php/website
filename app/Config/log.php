@@ -108,7 +108,7 @@ return [
              * 
              * @var string
              */
-            'level' => \Psr\Log\LogLevel::DEBUG,
+            'level' => on_prod() ? \Psr\Log\LogLevel::ERROR : \Psr\Log\LogLevel::DEBUG,
 
             /**
              * L'extension de nom de fichier par défaut pour les fichiers journaux.
