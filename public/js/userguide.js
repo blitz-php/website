@@ -1,5 +1,6 @@
 wrapHeadingsInAnchors();
 replaceBlockquotesWithCalloutsInDocs();
+enableGitDiffOnSampleCode();
 
 function wrapHeadingsInAnchors() {
     [...document.querySelector('#guide-content').querySelectorAll('a[name]')].forEach(anchor => {
@@ -91,3 +92,14 @@ function replaceBlockquote(el, regex, getImageAndColorByType) {
     }
 }
 
+function enableGitDiffOnSampleCode() {
+    const elements = document.querySelectorAll('code');
+    elements.forEach(element => {
+        const className = element.classList.value
+        const matches = (new RegExp('language\-diff\-([a-z]+)')).exec(className)
+        if (matches) {
+            element.classList.add('diff-highlight')
+        }
+    });
+
+}
